@@ -1,7 +1,12 @@
 import "./App.css";
+import ToDoInput from "./components/ToDoInput";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <ToDoInput />
+    </>
+  );
 }
 
 export default App;
