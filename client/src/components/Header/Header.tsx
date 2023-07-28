@@ -2,7 +2,7 @@ import Greeting from "./Greeting";
 import DayAndDate from "./DayAndDate";
 import TaskDone from "./TaskDone";
 
-function Header() {
+const Header: React.FC = () => {
   return (
     <>
       <Greeting />
@@ -10,6 +10,6 @@ function Header() {
       <TaskDone />
     </>
   );
-}
+};
 
 export default Header;

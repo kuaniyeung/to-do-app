@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-function Greeting() {
+const Greeting: React.FC = () => {
   function getGreeting() {
     const currTime = DateTime.now().hour;
 
@@ -10,6 +10,6 @@ function Greeting() {
   }
 
   return <h1>{getGreeting()}</h1>;
-}
+};
 
 export default Greeting;

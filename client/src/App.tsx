@@ -6,9 +6,9 @@ import DoneButton from "./components/Buttons/DoneButton";
 import AddTaskButton from "./components/Buttons/AddTaskButton";
 import WeekdaysBar from "./components/WeekdaysBar";
 import Tasks from "./components/Tasks/Tasks";
-import AddNewTask from "./components/AddNewTask";
+import DateAndTimePicker from "./components/AddNewTask/DateAndTimePicker";
 
-function App() {
+const App: React.FC = () => {
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -57,6 +57,11 @@ function App() {
     return data;
   }; */
 
+  const handleDateChange = (selectedDate: Date) => {
+    console.log("Selected date:", selectedDate); // Selected date: Mon Jul 24 2023 12:00:00 GMT-0400 (Eastern Daylight Time)
+    console.log("Selected date:", selectedDate.toISOString()); // Selected date: 2023-07-24T16:00:00.000Z
+  };
+
   return (
     <>
       <AddTaskButton />
@@ -65,9 +70,9 @@ function App() {
       <DoneButton />
       <WeekdaysBar />
       <Tasks />
-      <AddNewTask />
+      <DateAndTimePicker onDateChange={handleDateChange} />
     </>
   );
-}
+};
 
 export default App;

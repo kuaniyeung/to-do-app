@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-function DayAndDate() {
+const DayAndDate: React.FC = () => {
   const today = DateTime.now().setLocale("en-US");
 
   const currDay: string = today.toLocaleString({ weekday: "long" });
@@ -17,6 +17,6 @@ function DayAndDate() {
       <span>{currDate}</span>
     </>
   );
-}
+};
 
 export default DayAndDate;

@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-function WeekdaysBar() {
+const WeekdaysBar: React.FC = () => {
   const isActive = (weekday: string) => {
     const currDay: string = DateTime.now().toLocaleString({ weekday: "short" });
     return currDay === weekday;
@@ -30,6 +30,6 @@ function WeekdaysBar() {
       ))}
     </div>
   );
-}
+};
 
 export default WeekdaysBar;
