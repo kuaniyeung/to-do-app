@@ -1,9 +1,8 @@
-export interface Task {
+export interface IsTask {
   id: number;
   title: string;
   description: string;
-  date: string;
-  day: string;
-  time: string;
+  isoDate: string;
   done: boolean;
 }
+

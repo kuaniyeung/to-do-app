@@ -8,9 +8,10 @@ import AddTaskButton from "./components/Buttons/AddTaskButton";
 import WeekdaysBar from "./components/WeekdaysBar";
 import Tasks from "./components/Tasks/Tasks";
 import DateAndTimePicker from "./components/AddNewTask/DateAndTimePicker";
+import { IsTask } from "./components/interface";
 
 const App: React.FC = () => {
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<IsTask[]>([
     {
       id: 1,
       title: "Do laundry",
@@ -64,7 +65,7 @@ const App: React.FC = () => {
       <ActiveButton />
       <DoneButton />
       <WeekdaysBar />
-      <Tasks />
+      <Tasks tasks={tasks} />
       <DateAndTimePicker onDateChange={handleDateChange} />
     </>
   );
