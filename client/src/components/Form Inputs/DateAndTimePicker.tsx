@@ -3,10 +3,13 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/confetti.css";
 
 interface DatePickerProps {
+  placeholder: string;
   onDateChange: (selectedDate: Date) => void;
 }
 
-const DateAndTimePicker: React.FC<DatePickerProps> = ({ onDateChange }) => {
+const DateAndTimePicker: React.FC<DatePickerProps> = ({
+  placeholder, onDateChange,
+}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (dates: Date[]) => {
@@ -26,9 +29,10 @@ const DateAndTimePicker: React.FC<DatePickerProps> = ({ onDateChange }) => {
         altInput: true,
         altFormat: "F j, Y h:i K",
       }}
-      placeholder="Select a date and time"
+      placeholder={placeholder}
       value={selectedDate?.toISOString()} // Convert Date to ISO string
       onChange={handleDateChange}
+      className="input input-bordered input-accent w-full max-w-xs"
     />
   );
 };

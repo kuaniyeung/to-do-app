@@ -1,7 +1,7 @@
 export interface IsTask {
   id: number;
   title: string;
-  description: string;
+  details: string;
   isoDate: string;
   done: boolean;
 }
