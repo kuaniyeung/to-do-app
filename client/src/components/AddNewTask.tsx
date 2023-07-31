@@ -1,3 +1,4 @@
+import AddButton from "./Buttons/AddButton";
 import DateAndTimePicker from "./Form Inputs/DateAndTimePicker";
 import TextInput from "./Form Inputs/TextInput";
 import Textarea from "./Form Inputs/Textarea";
@@ -16,6 +17,7 @@ const AddNewTask: React.FC = () => {
         placeholder={"Date and Time"}
         onDateChange={handleDateChange}
       />
+      <AddButton />
     </>
   );
 };

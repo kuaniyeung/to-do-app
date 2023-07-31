@@ -1,10 +1,10 @@
+import "./App.css";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
-import "./App.css";
 import Header from "./components/Header/Header";
 import ActiveButton from "./components/Buttons/ActiveButton";
 import DoneButton from "./components/Buttons/DoneButton";
-import AddTaskButton from "./components/Buttons/AddTaskButton";
+import AddNewTaskButton from "./components/Buttons/AddNewTaskButton";
 import WeekdaysBar from "./components/WeekdaysBar";
 import Tasks from "./components/Tasks/Tasks";
 import { IsTask } from "./components/interface";
@@ -61,7 +61,7 @@ const App: React.FC = () => {
       <DoneButton />
       <WeekdaysBar />
       <Tasks tasks={tasks} />
-      <AddTaskButton />
+      <AddNewTaskButton />
       <AddNewTask />
     </>
   );
