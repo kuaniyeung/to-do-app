@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const AddNewTaskButton: React.FC = () => {
+const AddTaskButton: React.FC = () => {
   return (
     <button className="btn btn-circle btn-accent">
       <FontAwesomeIcon icon={faPlus} />
@@ -9,4 +9,4 @@ const AddNewTaskButton: React.FC = () => {
   );
 };
 
-export default AddNewTaskButton;
+export default AddTaskButton;

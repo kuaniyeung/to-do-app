@@ -6,26 +6,18 @@ const WeekdaysBar: React.FC = () => {
     return currDay === weekday;
   };
 
-  const weekdays = [
-    { id: 1, name: "Mon" },
-    { id: 2, name: "Tue" },
-    { id: 3, name: "Wed" },
-    { id: 4, name: "Thu" },
-    { id: 5, name: "Fri" },
-    { id: 6, name: "Sat" },
-    { id: 7, name: "Sun" },
-  ];
+  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
     <div>
-      {weekdays.map((weekday) => (
+      {weekdays.map((weekday, index) => (
         <button
-          key={weekday.id}
+          key={index}
           className={
-            isActive(weekday.name) ? "text-neutral-content" : "text-neutral"
+            isActive(weekday) ? "text-neutral-content" : "text-neutral"
           }
         >
-          {weekday.name}
+          {weekday}
         </button>
       ))}
     </div>

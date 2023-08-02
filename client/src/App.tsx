@@ -4,11 +4,11 @@ import { DateTime } from "luxon";
 import Header from "./components/Header/Header";
 import ActiveButton from "./components/Buttons/ActiveButton";
 import DoneButton from "./components/Buttons/DoneButton";
-import AddNewTaskButton from "./components/Buttons/AddNewTaskButton";
+import AddTaskButton from "./components/Buttons/AddTaskButton";
 import WeekdaysBar from "./components/WeekdaysBar";
 import Tasks from "./components/Tasks/Tasks";
 import { IsTask } from "./components/interface";
-import AddNewTask from "./components/AddNewTask";
+import AddTask from "./components/AddTask";
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<IsTask[]>([
@@ -61,8 +61,8 @@ const App: React.FC = () => {
       <DoneButton />
       <WeekdaysBar />
       <Tasks tasks={tasks} />
-      <AddNewTaskButton />
-      <AddNewTask />
+      <AddTaskButton />
+      <AddTask />
     </>
   );
 };
