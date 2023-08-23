@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
+import { createClient } from "@supabase/supabase-js";
 import Header from "./components/Header/Header";
 import ActiveButton from "./components/Buttons/ActiveButton";
 import DoneButton from "./components/Buttons/DoneButton";
@@ -9,6 +10,11 @@ import WeekdaysBar from "./components/WeekdaysBar";
 import Tasks from "./components/Tasks/Tasks";
 import { IsTask } from "./components/interface";
 import AddTask from "./components/AddTask";
+
+const supabaseUrl = "https://wxgbteupvrwxxgdgbgoa.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4Z2J0ZXVwdnJ3eHhnZGdiZ29hIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTI3NDA4NTAsImV4cCI6MjAwODMxNjg1MH0.wHLHR8gKUxhuVqkynliRHo_cq_q29feVEu0K1Qpp8NA";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<IsTask[]>([
@@ -52,7 +58,6 @@ const App: React.FC = () => {
 
     return data;
   }; */
-
 
   return (
     <>
