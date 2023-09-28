@@ -1,24 +1,61 @@
-import ActionButton from "./Buttons/ActionButton";
+import { useState } from "react";
 import DateAndTimePicker from "./FormInputs/DateAndTimePicker";
-import TextInput from "./FormInputs/TextInput";
+import Input from "./FormInputs/Input";
 import Textarea from "./FormInputs/Textarea";
 
-const AddTask: React.FC = () => {
+interface AddTaskProps {
+  onAdd: Function;
+}
+
+const AddTask: React.FC<AddTaskProps> = ({ onAdd }) => {
+  const [title, setTitle] = useState("");
+  const [details, setDetails] = useState("");
+  const [due_by, setDueBy] = useState("");
+
   const handleDateChange = (selectedDate: Date) => {
-    console.log("Selected date:", selectedDate); // Selected date: Mon Jul 24 2023 12:00:00 GMT-0400 (Eastern Daylight Time)
-    console.log("Selected date:", selectedDate.toISOString()); // Selected date: 2023-07-24T16:00:00.000Z
+    setDueBy(selectedDate.toISOString());
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title) {
+      alert("Please add a name.");
+      return;
+    }
+
+    onAdd({ title, details, due_by });
+
+    setTitle("");
+    setDetails("");
+    setDueBy("");
   };
 
   return (
     <>
-      <TextInput placeholder={"Title"} />
-      <Textarea placeholder={"Details"} />
-      <DateAndTimePicker
-        placeholder={"Date and Time"}
-        onDateChange={handleDateChange}
-      />
-      <ActionButton text={"Add"} style={"btn-accent"} />
-      <ActionButton text={"Cancel"} style={"btn-outline"} />
+      <form
+        action="/submit-form"
+        onSubmit={onSubmit}
+        className="fixed top-0 left-0 right-0 w-full h-full bg-base-200 flex flex-col z-10 px-8 p-10"
+      >
+        <Input
+          type={"text"}
+          label={"Task Name"}
+          placeholder={"Title"}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Textarea
+          label={"Task Description"}
+          placeholder={"Details"}
+          onChange={(e) => setDetails(e.target.value)}
+        />
+        <DateAndTimePicker
+          label={"Due Date"}
+          placeholder={"Date and Time"}
+          onDateChange={handleDateChange}
+        />
+        <Input type={"submit"} value={"Add"} />
+      </form>
     </>
   );
 };

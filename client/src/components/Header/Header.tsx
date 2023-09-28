@@ -6,8 +6,10 @@ const Header: React.FC = () => {
   return (
     <>
       <Greeting />
-      <DayAndDate />
-      <TaskDone />
+      <div className="flex justify-between my-3">
+        <DayAndDate />
+        <TaskDone />
+      </div>
     </>
   );
 };

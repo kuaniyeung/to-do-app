@@ -1,6 +1,7 @@
 interface ActionButtonProps {
-  text: string;
+  onClick?: Function
   style: string;
+  text: string;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = ({ text, style }) => {

@@ -1,8 +1,8 @@
 export interface IsTask {
   id: number;
+  created_on: string; 
   title: string;
   details: string;
-  isoDate: string;
-  done: boolean;
+  due_by: string;
+  completed: boolean;
 }
-

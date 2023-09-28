@@ -9,12 +9,14 @@ const WeekdaysBar: React.FC = () => {
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
-    <div>
+    <div className="text-center my-3 flex justify-between">
       {weekdays.map((weekday, index) => (
         <button
           key={index}
           className={
-            isActive(weekday) ? "text-neutral-content" : "text-neutral"
+            isActive(weekday)
+              ? "text-neutral-content"
+              : "text-neutral"
           }
         >
           {weekday}

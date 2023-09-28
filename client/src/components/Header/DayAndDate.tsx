@@ -13,8 +13,10 @@ const DayAndDate: React.FC = () => {
 
   return (
     <>
-      <span>Today's {currDay}</span>
-      <span>{currDate}</span>
+      <div>
+        <div>Today's {currDay}</div>
+        <div>{currDate}</div>
+      </div>
     </>
   );
 };
