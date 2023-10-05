@@ -1,22 +1,31 @@
 import { IsTask } from "../interface";
 import TaskItem from "./TaskItem";
 
+
 interface TasksProps {
+  onComplete: Function;
   onDelete: Function;
   tasks: IsTask[];
 }
 
-const TaskContainer: React.FC<TasksProps> = ({ tasks, onDelete }) => {
+const TaskContainer: React.FC<TasksProps> = ({
+  tasks,
+  onComplete,
+  onDelete,
+}) => {
+  const uncompletedTasks = tasks.filter((task) => task.completed === false);
   return (
     <>
-      {tasks.map((task, index) => (
+      {uncompletedTasks.map((task, index) => (
         <TaskItem
           key={task.id}
           task={task}
-          onDelete={onDelete}
           indexOfTask={index}
+          onComplete={onComplete}
+          onDelete={onDelete}
         />
       ))}
+      
     </>
   );
 };

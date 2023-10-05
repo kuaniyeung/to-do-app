@@ -3,13 +3,19 @@ import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { createClient } from "@supabase/supabase-js";
 import Header from "./components/Header/Header";
-import ActiveButton from "./components/Buttons/ActiveButton";
-import DoneButton from "./components/Buttons/DoneButton";
+import TodayTomorrowButton from "./components/Buttons/TodayTomorrowButton";
 import AddTaskToggle from "./components/Buttons/AddTaskToggle";
 import WeekdaysBar from "./components/WeekdaysBar";
 import TaskContainer from "./components/Tasks/TaskContainer";
-import { IsTask } from "./components/interface";
 import AddTask from "./components/AddTask";
+import ConfirmationDialog from "./components/ConfirmationDialog/ConfirmationDialog";
+import {
+  DialogProviders,
+  useConfirmationDialogText,
+  useConfirmationDialogIsOpen,
+  useConfirmationDialogAction,
+} from "./components/ConfirmationDialog/ConfirmationDialogContext";
+import { IsTask } from "./components/interface";
 
 const supabaseUrl = "https://wxgbteupvrwxxgdgbgoa.supabase.co";
 const supabaseKey =
@@ -28,7 +34,9 @@ const App: React.FC = () => {
 
   // Fetch Tasks
   const fetchTasks = async () => {
+    // const { data, error } = await supabase.from("todos").select().eq("completed", completion);
     const { data, error } = await supabase.from("todos").select();
+
     if (data) {
       setTasks(data);
     }
@@ -70,6 +78,19 @@ const App: React.FC = () => {
     setTasks([...tasks, task]);
   };
 
+  // Update Task
+  const updateTaskCompletion = async (id: number, updatedData: boolean) => {
+    const { error } = await supabase
+      .from("todos")
+      .update({ completed: updatedData })
+      .eq("id", id)
+      .select();
+
+    if (error) {
+      console.error(error);
+    }
+  };
+
   // Delete Task
 
   const deleteTask = async (id: number) => {
@@ -80,23 +101,49 @@ const App: React.FC = () => {
     }
   };
 
+  // Confirmation Dialog
+
+  const { confirmationDialogText } = useConfirmationDialogText();
+  const { confirmationDialogIsOpen, setConfirmationDialogIsOpen } =
+    useConfirmationDialogIsOpen();
+  const { confirmationDialogAction } = useConfirmationDialogAction();
+
   return (
     <>
       <div className="m-5 mb-24">
         <Header />
         <div className="text-center">
-          <ActiveButton />
-          <DoneButton />
+          <TodayTomorrowButton text={"today"} buttonColor={"secondary"} />
+          <TodayTomorrowButton text={"tomorrow"} buttonColor={"accent"} />
         </div>
         <WeekdaysBar />
-        <TaskContainer tasks={tasks} onDelete={deleteTask} />
+
+        <TaskContainer
+          tasks={tasks}
+          onComplete={updateTaskCompletion}
+          onDelete={deleteTask}
+        />
+
+        {/* Confirmation Dialog */}
+        <ConfirmationDialog
+          isOpen={confirmationDialogIsOpen}
+          onConfirm={confirmationDialogAction}
+          onCancel={setConfirmationDialogIsOpen(false)}
+          text={confirmationDialogText}
+        />
+
         <div className="fixed bottom-5 left-2/4 -translate-x-2/4 z-50">
           <AddTaskToggle
             onClick={() => setShowAddTask(!showAddTask)}
             showAdd={showAddTask}
           />
         </div>
-        {showAddTask && <AddTask onAdd={addTask} />}
+        {showAddTask && (
+          <AddTask
+            onAdd={addTask}
+            closeAdd={() => setShowAddTask(!showAddTask)}
+          />
+        )}
       </div>
     </>
   );

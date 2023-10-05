@@ -5,9 +5,10 @@ import Textarea from "./FormInputs/Textarea";
 
 interface AddTaskProps {
   onAdd: Function;
+  closeAdd: Function;
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ onAdd }) => {
+const AddTask: React.FC<AddTaskProps> = ({ onAdd, closeAdd }) => {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [due_by, setDueBy] = useState("");
@@ -29,6 +30,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd }) => {
     setTitle("");
     setDetails("");
     setDueBy("");
+
+    closeAdd();
   };
 
   return (

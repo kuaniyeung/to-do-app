@@ -15,7 +15,7 @@ const AddTaskToggle: React.FC<AddTaskToggleProps> = ({onClick, showAdd}) => {
       return classes += " btn-neutral-focus btn-outline";
     }
 
-    return (classes += " btn-info btn-outline");
+    return (classes += " btn-info");
   }
 
   return (

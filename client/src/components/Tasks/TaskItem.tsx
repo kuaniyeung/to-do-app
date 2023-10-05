@@ -2,13 +2,25 @@ import { IsTask } from "../interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 
+import {
+  useConfirmationDialogText,
+  useConfirmationDialogIsOpen,
+  useConfirmationDialogAction,
+} from "../ConfirmationDialog/ConfirmationDialogContext";
+
 interface TaskItemProps {
-  indexOfTask: number;
+  onComplete: Function;
   onDelete: Function;
+  indexOfTask: number;
   task: IsTask;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ indexOfTask, task, onDelete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({
+  indexOfTask,
+  task,
+  onComplete,
+  onDelete,
+}) => {
   const getTaskItemClasses = () => {
     const index: number = indexOfTask + 1;
     let classes = "card shadow-xl rounded-3xl";
@@ -22,6 +34,20 @@ const TaskItem: React.FC<TaskItemProps> = ({ indexOfTask, task, onDelete }) => {
     }
 
     return (classes += " bg-accent text-accent-content");
+  };
+
+  const { setConfirmationDialogText } = useConfirmationDialogText();
+  const { setConfirmationDialogIsOpen } = useConfirmationDialogIsOpen();
+  const { setConfirmationDialogAction } = useConfirmationDialogAction();
+
+  const handleConfirmDelete = () => {
+    onDelete(task.id);
+    setConfirmationDialogIsOpen(false);
+  };
+
+  const handleConfirmTaskCompletion = () => {
+    onComplete(task.id, true);
+    setConfirmationDialogIsOpen(false);
   };
 
   return (
@@ -39,7 +65,16 @@ const TaskItem: React.FC<TaskItemProps> = ({ indexOfTask, task, onDelete }) => {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-22"
               >
                 <li>
-                  <a onClick={() => onDelete(task.id)} className="text-white">
+                  <a
+                    onClick={() => {
+                      setConfirmationDialogIsOpen(true);
+                      setConfirmationDialogText(
+                        "Are you sure you want to delete this task?"
+                      );
+                      setConfirmationDialogAction(handleConfirmDelete);
+                    }}
+                    className="text-white"
+                  >
                     Delete
                   </a>
                 </li>
@@ -49,8 +84,20 @@ const TaskItem: React.FC<TaskItemProps> = ({ indexOfTask, task, onDelete }) => {
           <div className="flex justify-between">
             <p>{task.details}</p>
             <div className="flex flex-col items-center card-actions justify-end ml-4">
+              {/* Time left */}
               <div className="whitespace-nowrap">1h 20m</div>
-              <button className="btn btn-circle">
+
+              {/* Click to complete */}
+              <button
+                className="btn btn-circle"
+                onClick={() => {
+                  setConfirmationDialogIsOpen(true);
+                  setConfirmationDialogText(
+                    "Are you sure you have completed this task"
+                  );
+                  setConfirmationDialogAction(handleConfirmTaskCompletion);
+                }}
+              >
                 <FontAwesomeIcon icon={faCheck} />
               </button>
             </div>
