@@ -21,8 +21,8 @@ const TaskContainer: React.FC<TasksProps> = ({
           key={task.id}
           task={task}
           indexOfTask={index}
-          onComplete={onComplete}
           onDelete={onDelete}
+          onComplete={onComplete}
         />
       ))}
       

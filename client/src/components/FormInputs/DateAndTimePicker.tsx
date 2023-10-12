@@ -31,10 +31,9 @@ const DateAndTimePicker: React.FC<DatePickerProps> = ({
       </label>
       <Flatpickr
         options={{
-          enableTime: true,
-          dateFormat: "Y-m-d H:i",
+          enableTime: false,
           altInput: true,
-          altFormat: "F j, Y h:i K",
+          altFormat: "F j, Y",
           disableMobile: true,
         }}
         placeholder={placeholder}

@@ -1,59 +1,97 @@
-import "./App.css";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { createClient } from "@supabase/supabase-js";
 import Header from "./components/Header/Header";
-import TodayTomorrowButton from "./components/Buttons/TodayTomorrowButton";
+import FilterButton from "./components/Buttons/FilterButton";
 import AddTaskToggle from "./components/Buttons/AddTaskToggle";
 import WeekdaysBar from "./components/WeekdaysBar";
 import TaskContainer from "./components/Tasks/TaskContainer";
 import AddTask from "./components/AddTask";
-import ConfirmationDialog from "./components/ConfirmationDialog/ConfirmationDialog";
-import {
-  DialogProviders,
-  useConfirmationDialogText,
-  useConfirmationDialogIsOpen,
-  useConfirmationDialogAction,
-} from "./components/ConfirmationDialog/ConfirmationDialogContext";
 import { IsTask } from "./components/interface";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const supabaseUrl = "https://wxgbteupvrwxxgdgbgoa.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4Z2J0ZXVwdnJ3eHhnZGdiZ29hIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5Mjc0MDg1MCwiZXhwIjoyMDA4MzE2ODUwfQ.RbiQ94RSkL4uWJfWXNBzz7JyKoAiuzG0ukPERUkBSUE";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const today = DateTime.now().toFormat("yyyy-MM-dd");
+const today: string = DateTime.now().toISODate() || "";
+const tomorrow: string = DateTime.now().plus({days: 1}).toISODate() || "";
+
 
 const App: React.FC = () => {
   const [showAddTask, setShowAddTask] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<IsTask[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<string>("active");
+  const [activeTasks, setActiveTasks] = useState<IsTask[]>([]);
+  const [tasksDueToday, setTasksDueToday] = useState<IsTask[]>([]);
+  const [tasksDueTomorrow, setTasksDueTomorrow] = useState<IsTask[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchTasks();
-  }, [tasks]);
+    setTimeout(() => {
+      fetchActiveTasks();
+    }, 500);
+  }, []);
 
-  // Fetch Tasks
-  const fetchTasks = async () => {
-    // const { data, error } = await supabase.from("todos").select().eq("completed", completion);
-    const { data, error } = await supabase.from("todos").select();
+  // Fetch all active tasks
+  const fetchActiveTasks = async () => {
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("todos")
+      .select()
+      .eq("completed", false);
 
     if (data) {
-      setTasks(data);
+      setActiveTasks(data);
     }
 
     if (error) {
-      console.error(error);
+      console.error("Error fetching data:", error);
     }
+
+    setLoading(false);
   };
 
-  // Fetch Task
-  const fetchTask = async (id: number) => {
-    const { data, error } = await supabase.from("todos").select().eq("id", id);
-    console.log(data);
+  // Fetch tasks that are due today
+  const fetchTasksDueToday = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("todos")
+      .select()
+      .eq("completed", false)
+      .eq("due_by", today);
+
+    if (data) {
+      setTasksDueToday(data);
+    }
 
     if (error) {
-      console.error(error);
+      console.error("Error fetching data:", error);
     }
+
+    setLoading(false);
+  };
+
+  // Fetch tasks that are due tomorrow
+  const fetchTasksDueTomorrow = async () => {
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("todos")
+      .select()
+      .eq("completed", false)
+      .eq("due_by", tomorrow);
+
+    if (data) {
+      setTasksDueTomorrow(data);
+    }
+
+    if (error) {
+      console.error("Error fetching data:", error);
+    }
+
+    setLoading(false);
   };
 
   // Add Task
@@ -72,10 +110,12 @@ const App: React.FC = () => {
       .select();
 
     if (error) {
-      console.error(error);
+      console.error("Error fetching data:", error);
     }
 
-    setTasks([...tasks, task]);
+    setActiveTasks([...activeTasks, task]);
+    setSelectedFilter("active");
+    fetchActiveTasks();
   };
 
   // Update Task
@@ -87,8 +127,10 @@ const App: React.FC = () => {
       .select();
 
     if (error) {
-      console.error(error);
+      console.error("Error fetching data:", error);
     }
+
+    fetchActiveTasks();
   };
 
   // Delete Task
@@ -97,53 +139,91 @@ const App: React.FC = () => {
     const { error } = await supabase.from("todos").delete().eq("id", id);
 
     if (error) {
-      console.error(error);
+      console.error("Error fetching data:", error);
     }
+
+    fetchActiveTasks();
   };
 
-  // Confirmation Dialog
+  // Check filter
 
-  const { confirmationDialogText } = useConfirmationDialogText();
-  const { confirmationDialogIsOpen, setConfirmationDialogIsOpen } =
-    useConfirmationDialogIsOpen();
-  const { confirmationDialogAction } = useConfirmationDialogAction();
+  const checkFilterForTasks = (): IsTask[] => {
+    if (selectedFilter === "active") {
+      return activeTasks || [];
+    }
+    if (selectedFilter === "today") {
+      return tasksDueToday || [];
+    }
+    if (selectedFilter === "tomorrow") {
+      return tasksDueTomorrow || [];
+    }
+
+    return [];
+  };
 
   return (
     <>
-      <div className="m-5 mb-24">
-        <Header />
-        <div className="text-center">
-          <TodayTomorrowButton text={"today"} buttonColor={"secondary"} />
-          <TodayTomorrowButton text={"tomorrow"} buttonColor={"accent"} />
+      <div className="xl:flex xl:justify-center">
+        <div className="m-5 mb-24 md:m-8 md:!mb-28 lg:m-12 xl:max-w-7xl">
+          <Header />
+          <div className="text-center">
+            <FilterButton
+              text={"active"}
+              selectedFilter={selectedFilter}
+              buttonColor={"primary"}
+              onClick={() => {
+                setSelectedFilter("active");
+                fetchActiveTasks();
+              }}
+            />
+            <FilterButton
+              text={"today"}
+              selectedFilter={selectedFilter}
+              buttonColor={"secondary"}
+              onClick={() => {
+                setSelectedFilter("today");
+                fetchTasksDueToday();
+              }}
+            />
+            <FilterButton
+              text={"tomorrow"}
+              selectedFilter={selectedFilter}
+              buttonColor={"accent"}
+              onClick={() => {
+                setSelectedFilter("tomorrow");
+                fetchTasksDueTomorrow();
+              }}
+            />
+          </div>
+          <WeekdaysBar />
+
+          {loading ? (
+            <div className="flex justify-center h-screen mt-5">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-4">
+              <TaskContainer
+                tasks={checkFilterForTasks()}
+                onDelete={deleteTask}
+                onComplete={updateTaskCompletion}
+              />
+            </div>
+          )}
+
+          <div className="fixed bottom-5 left-2/4 -translate-x-2/4 z-50">
+            <AddTaskToggle
+              onClick={() => setShowAddTask(!showAddTask)}
+              showAdd={showAddTask}
+            />
+          </div>
+          {showAddTask && (
+            <AddTask
+              onAdd={addTask}
+              closeAdd={() => setShowAddTask(!showAddTask)}
+            />
+          )}
         </div>
-        <WeekdaysBar />
-
-        <TaskContainer
-          tasks={tasks}
-          onComplete={updateTaskCompletion}
-          onDelete={deleteTask}
-        />
-
-        {/* Confirmation Dialog */}
-        <ConfirmationDialog
-          isOpen={confirmationDialogIsOpen}
-          onConfirm={confirmationDialogAction}
-          onCancel={setConfirmationDialogIsOpen(false)}
-          text={confirmationDialogText}
-        />
-
-        <div className="fixed bottom-5 left-2/4 -translate-x-2/4 z-50">
-          <AddTaskToggle
-            onClick={() => setShowAddTask(!showAddTask)}
-            showAdd={showAddTask}
-          />
-        </div>
-        {showAddTask && (
-          <AddTask
-            onAdd={addTask}
-            closeAdd={() => setShowAddTask(!showAddTask)}
-          />
-        )}
       </div>
     </>
   );
