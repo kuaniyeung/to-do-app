@@ -2,6 +2,7 @@ import { useState } from "react";
 import DateAndTimePicker from "./FormInputs/DateAndTimePicker";
 import Input from "./FormInputs/Input";
 import Textarea from "./FormInputs/Textarea";
+import WarningDialog from "./Dialogs/WarningDialog";
 
 interface AddTaskProps {
   onAdd: Function;
@@ -20,8 +21,9 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, closeAdd }) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title && !due_by) {
-      alert("Please add a name and due date.");
+    if (!title || due_by === "") {
+      setWarningDialogIsOpen(true);
+      setWarningDialogText("Please add Task Name and Due Date.");
       return;
     }
 
@@ -33,6 +35,12 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, closeAdd }) => {
 
     closeAdd();
   };
+
+  const [warningDialogIsOpen, setWarningDialogIsOpen] =
+    useState<boolean>(false);
+
+  const [warningDialogText, setWarningDialogText] = useState<string>("");
+
 
   return (
     <>
@@ -61,6 +69,12 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, closeAdd }) => {
           <Input type={"submit"} value={"Add"} />
         </form>{" "}
       </div>
+
+      <WarningDialog
+        isOpen={warningDialogIsOpen}
+        onConfirm={() =>setWarningDialogIsOpen(false)}
+        text={warningDialogText}
+      />
     </>
   );
 };

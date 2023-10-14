@@ -40,7 +40,6 @@ const DateAndTimePicker: React.FC<DatePickerProps> = ({
         value={selectedDate?.toISOString()} // Convert Date to ISO string
         onChange={handleDateChange}
         className="input input-bordered input-accent w-full mb-2 text-base"
-        required
       />
     </>
   );

@@ -30,7 +30,6 @@ const TextInput: React.FC<TextInputProps> = ({
             : "input input-bordered input-accent w-full mb-2 text-base"
         }
         onChange={onChange}
-        required
         maxLength={40}
       />
     </>

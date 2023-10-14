@@ -1,7 +1,7 @@
 import { IsTask } from "../interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
+import ConfirmationDialog from "../Dialogs/ConfirmationDialog";
 import { useState } from "react";
 interface TaskItemProps {
   onComplete: Function;

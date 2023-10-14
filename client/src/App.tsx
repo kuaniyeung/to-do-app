@@ -163,7 +163,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className="xl:flex xl:justify-center">
-        <div className="m-5 mb-24 w-full md:m-8 md:!mb-28 lg:m-12 xl:max-w-7xl">
+        <div className="m-5 mb-24 md:m-8 md:!mb-28 xl:w-full lg:m-12 xl:max-w-7xl">
           <Header />
           <div className="text-center">
             <FilterButton
