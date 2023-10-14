@@ -16,8 +16,7 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const today: string = DateTime.now().toISODate() || "";
-const tomorrow: string = DateTime.now().plus({days: 1}).toISODate() || "";
-
+const tomorrow: string = DateTime.now().plus({ days: 1 }).toISODate() || "";
 
 const App: React.FC = () => {
   const [showAddTask, setShowAddTask] = useState<boolean>(false);
@@ -164,7 +163,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className="xl:flex xl:justify-center">
-        <div className="m-5 mb-24 md:m-8 md:!mb-28 lg:m-12 xl:max-w-7xl">
+        <div className="m-5 mb-24 w-full md:m-8 md:!mb-28 lg:m-12 xl:max-w-7xl">
           <Header />
           <div className="text-center">
             <FilterButton
@@ -202,7 +201,7 @@ const App: React.FC = () => {
               <LoadingSpinner />
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-4 ">
               <TaskContainer
                 tasks={checkFilterForTasks()}
                 onDelete={deleteTask}
