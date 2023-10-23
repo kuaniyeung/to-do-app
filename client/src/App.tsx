@@ -15,12 +15,12 @@ const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4Z2J0ZXVwdnJ3eHhnZGdiZ29hIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5Mjc0MDg1MCwiZXhwIjoyMDA4MzE2ODUwfQ.RbiQ94RSkL4uWJfWXNBzz7JyKoAiuzG0ukPERUkBSUE";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const today: string = DateTime.now().toISODate() || "";
-const tomorrow: string = DateTime.now().plus({ days: 1 }).toISODate() || "";
+const today = DateTime.now().toISODate() || "";
+const tomorrow = DateTime.now().plus({ days: 1 }).toISODate() || "";
 
 const App: React.FC = () => {
-  const [showAddTask, setShowAddTask] = useState<boolean>(false);
-  const [selectedFilter, setSelectedFilter] = useState<string>("active");
+  const [showAddTask, setShowAddTask] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("active");
   const [activeTasks, setActiveTasks] = useState<IsTask[]>([]);
   const [tasksDueToday, setTasksDueToday] = useState<IsTask[]>([]);
   const [tasksDueTomorrow, setTasksDueTomorrow] = useState<IsTask[]>([]);
