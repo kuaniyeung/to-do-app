@@ -11,8 +11,7 @@ import { IsTask } from "./components/interface";
 import LoadingSpinner from "./components/LoadingSpinner";
 
 const supabaseUrl = "https://wxgbteupvrwxxgdgbgoa.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4Z2J0ZXVwdnJ3eHhnZGdiZ29hIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5Mjc0MDg1MCwiZXhwIjoyMDA4MzE2ODUwfQ.RbiQ94RSkL4uWJfWXNBzz7JyKoAiuzG0ukPERUkBSUE";
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const today = DateTime.now().toISODate() || "";
