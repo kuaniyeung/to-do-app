@@ -15,5 +15,6 @@ export default defineConfig({
   plugins: [react()],
   define: {
     "import.meta.env.VITE_SUPABASE_KEY": JSON.stringify(env.VITE_SUPABASE_KEY),
+    "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(env.VITE_SUPABASE_URL),
   },
 });

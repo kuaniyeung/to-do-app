@@ -67,7 +67,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, closeAdd }) => {
             onDateChange={handleDateChange}
           />
           <Input type={"submit"} value={"Add"} />
-        </form>{" "}
+        </form>
       </div>
 
       <WarningDialog
