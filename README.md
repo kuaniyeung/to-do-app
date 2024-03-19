@@ -16,4 +16,4 @@ Welcome to Do Your Tasks, a simple to-do app designed to help you organize your 
 - **Supabase**: An open-source alternative to Firebase, providing a suite of services like authentication, real-time database, and more.
 
 ## Demo
-Explore the [Do Your Tasks App](https://[canvas-text-editor.netlify.app](https://do-your-tasks-to-do-app.netlify.app/)https://do-your-tasks-to-do-app.netlify.app//) in action.
+Explore the [Do Your Tasks App](https://do-your-tasks-to-do-app.netlify.app/) in action.
