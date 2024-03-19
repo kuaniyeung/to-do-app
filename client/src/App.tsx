@@ -209,7 +209,7 @@ const App: React.FC = () => {
             </div>
           )}
 
-          <div className="fixed bottom-5 left-2/4 -translate-x-2/4 z-50">
+          <div className="fixed bottom-10 left-2/4 -translate-x-2/4 z-50">
             <AddTaskToggle
               onClick={() => setShowAddTask(!showAddTask)}
               showAdd={showAddTask}
