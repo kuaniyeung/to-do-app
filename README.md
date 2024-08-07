@@ -13,7 +13,7 @@ Welcome to Do Your Tasks, a simple to-do app designed to help you organize your 
 - **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
 - **TailwindCSS**: A utility-first CSS framework for rapidly building custom designs.
 - **DaisyUI**: A TailwindCSS component library for rapid UI development.
-- **Supabase**: An open-source alternative to Firebase, providing a suite of services like authentication, real-time database, and more.
+- **Supabase**: An open-source database infrastructure built on PostgreSQL, providing a suite of services like authentication and real-time database.
 
 ## Demo
 Explore the [Do Your Tasks App](https://do-your-tasks-to-do-app.netlify.app/) in action.
